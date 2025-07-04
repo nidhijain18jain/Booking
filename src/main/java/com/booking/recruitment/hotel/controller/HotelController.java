@@ -24,6 +24,19 @@ public class HotelController {
     return hotelService.getAllHotels();
   }
 
+  @GetMapping(path = "/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public Hotel getHotelById(@PathVariable Long id) {
+    Optional<Hotel> hotelOptional = hotelService.getHotelById(id);
+    return hotelOptional.orElseThrow(() -> new ElementNotFoundException("Hotel not found"));
+  }
+
+  @DeleteMapping(path = "/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public Hotel deleteHotelById(@PathVariable Long id) {
+    return hotelService.deleteHotelById(id);
+  }
+
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Hotel createHotel(@RequestBody Hotel hotel) {
